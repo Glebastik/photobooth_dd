@@ -17,6 +17,8 @@ import 'package:io_photobooth/app/app_bloc_observer.dart';
 import 'package:io_photobooth/firebase_options.dart';
 import 'package:io_photobooth/landing/loading_indicator_io.dart'
     if (dart.library.html) 'landing/loading_indicator_web.dart';
+import 'package:io_photobooth/repositories/stub_authentication_repository.dart';
+import 'package:io_photobooth/repositories/stub_photos_repository.dart';
 import 'package:photobooth_ui/photobooth_ui.dart';
 
 void main() async {
@@ -26,30 +28,28 @@ void main() async {
     print(details.exceptionAsString());
     print(details.stack);
   };
-  // Инициализация Firebase только для поддерживаемых платформ
-  if (!kIsWeb && !Platform.isLinux) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  } else if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
   // Создание репозиториев с учетом платформы
-  late final AuthenticationRepository authenticationRepository;
-  late final PhotosRepository photosRepository;
+  late final dynamic authenticationRepository;
+  late final dynamic photosRepository;
   
   if (Platform.isLinux) {
-    // Для Linux создаем заглушки без Firebase
-    authenticationRepository = const AuthenticationRepository(
-      firebaseAuth: null,
-    );
-    photosRepository = PhotosRepository(
-      firebaseStorage: null,
-    );
+    // Для Linux используем stub репозитории без Firebase
+    print('🐧 Linux detected - using stub repositories');
+    
+    authenticationRepository = const StubAuthenticationRepository();
+    photosRepository = const StubPhotosRepository();
   } else {
+    // Инициализация Firebase для поддерживаемых платформ
+    if (!kIsWeb) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } else if (kIsWeb) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
+    
     authenticationRepository = AuthenticationRepository(
       firebaseAuth: FirebaseAuth.instance,
     );
