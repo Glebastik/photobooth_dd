@@ -4,8 +4,7 @@ import 'package:photobooth_ui/photobooth_ui.dart';
 /// Photobooth Text Style Definitions
 class PhotoboothTextStyle {
   static const _baseTextStyle = TextStyle(
-    package: 'photobooth_ui',
-    fontFamily: 'GoogleSans',
+    fontFamily: 'BigSoftie',
     color: PhotoboothColors.black,
     fontWeight: PhotoboothFontWeight.regular,
   );

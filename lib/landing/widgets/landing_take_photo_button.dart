@@ -1,7 +1,7 @@
 import 'package:analytics/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:io_photobooth/l10n/l10n.dart';
-import 'package:io_photobooth/photobooth/photobooth.dart';
+import 'package:io_photobooth/photobooth/widgets/enhanced_photobooth.dart';
 
 class LandingTakePhotoButton extends StatelessWidget {
   const LandingTakePhotoButton({super.key});
@@ -16,7 +16,11 @@ class LandingTakePhotoButton extends StatelessWidget {
           action: 'click-start-photobooth',
           label: 'start-photobooth',
         );
-        Navigator.of(context).push(PhotoboothPage.route());
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const EnhancedPhotobooth(),
+          ),
+        );
       },
       child: Text(l10n.landingPageTakePhotoButtonText),
     );

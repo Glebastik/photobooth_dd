@@ -1,0 +1,32 @@
+[Unit]
+Description=Photobooth Application
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+User=photobooth
+Group=photobooth
+WorkingDirectory=/opt/photobooth
+ExecStart=/opt/photobooth/io_photobooth
+Restart=always
+RestartSec=10
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=WAYLAND_DISPLAY=wayland-0
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/photobooth/data
+ReadWritePaths=/tmp
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=photobooth
+
+[Install]
+WantedBy=graphical-session.target

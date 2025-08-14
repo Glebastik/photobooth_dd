@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/sprite.dart';
 import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_ui/photobooth_ui.dart';
+import 'package:flame/flame.dart';
 
 /// {@template sprites}
 /// Object which contains meta data for a collection of sprites.
@@ -79,10 +79,11 @@ extension on _AnimatedSpriteStatus {
   bool get isLoaded => this == _AnimatedSpriteStatus.loaded;
 }
 
-class _AnimatedSpriteState extends State<AnimatedSprite> {
+class _AnimatedSpriteState extends State<AnimatedSprite>
+    with SingleTickerProviderStateMixin {
   late SpriteSheet _spriteSheet;
   late SpriteAnimation _animation;
-  Timer? _timer;
+  SpriteAnimationTicker? _animationTicker;
   var _status = _AnimatedSpriteStatus.loading;
   var _isPlaying = false;
 
@@ -94,7 +95,7 @@ class _AnimatedSpriteState extends State<AnimatedSprite> {
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _animationTicker?.reset();
     super.dispose();
   }
 
@@ -110,6 +111,8 @@ class _AnimatedSpriteState extends State<AnimatedSprite> {
         to: widget.sprites.frames,
         loop: widget.mode == AnimationMode.loop,
       );
+      
+      _animationTicker = SpriteAnimationTicker(_animation);
 
       setState(() {
         _status = _AnimatedSpriteStatus.loaded;
@@ -136,8 +139,8 @@ class _AnimatedSpriteState extends State<AnimatedSprite> {
             )
           : const SizedBox(),
       secondChild: SizedBox.expand(
-        child: _status.isLoaded
-            ? SpriteAnimationWidget(animation: _animation, playing: _isPlaying)
+        child: _status.isLoaded && _animationTicker != null
+            ? SpriteAnimationWidget(animation: _animation, animationTicker: _animationTicker!, playing: _isPlaying)
             : const SizedBox(),
       ),
       crossFadeState: _status.isLoaded

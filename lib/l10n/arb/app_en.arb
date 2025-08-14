@@ -84,6 +84,67 @@
     "@sharePageDownloadButtonText": {
         "description": "Button text shown on the share page which downloads the taken photo."
     },
+    "sharePagePrintButtonText": "Print",
+    "@sharePagePrintButtonText": {
+        "description": "Button text shown on the share page which prints the taken photo."
+    },
+    "photoboothModeButtonText": "PHOTOBOOTH MODE",
+    "@photoboothModeButtonText": {
+        "description": "Button text to enter photobooth mode."
+    },
+    "photoboothWelcomeText": "Welcome to the Photobooth!",
+    "@photoboothWelcomeText": {
+        "description": "Welcome message in photobooth mode."
+    },
+    "photoboothTakePhotoButtonText": "TAKE PHOTO",
+    "@photoboothTakePhotoButtonText": {
+        "description": "Button text to take a photo in photobooth mode."
+    },
+    "photoboothAutoModeButtonText": "AUTO MODE",
+    "@photoboothAutoModeButtonText": {
+        "description": "Button text to start auto mode in photobooth."
+    },
+    "photoboothStopButtonText": "STOP",
+    "@photoboothStopButtonText": {
+        "description": "Button text to stop auto mode in photobooth."
+    },
+    "photoboothPrintButtonText": "PRINT",
+    "@photoboothPrintButtonText": {
+        "description": "Button text to print photo in photobooth."
+    },
+    "photoboothFullscreenButtonText": "FULLSCREEN",
+    "@photoboothFullscreenButtonText": {
+        "description": "Button text to toggle fullscreen mode."
+    },
+    "photoboothCountdownText": "Photo in {seconds} sec...",
+    "@photoboothCountdownText": {
+        "description": "Countdown text before taking photo.",
+        "placeholders": {
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "photoboothSmileText": "Smile! 📸",
+    "@photoboothSmileText": {
+        "description": "Text shown when taking photo."
+    },
+    "photoboothPhotoReadyText": "Photo ready!",
+    "@photoboothPhotoReadyText": {
+        "description": "Text shown when photo is taken."
+    },
+    "photoboothPrintSentText": "Sent to print!",
+    "@photoboothPrintSentText": {
+        "description": "Text shown when photo is sent to printer."
+    },
+    "photoboothAutoModeOnText": "Auto mode enabled",
+    "@photoboothAutoModeOnText": {
+        "description": "Text shown when auto mode is enabled."
+    },
+    "photoboothAutoModeOffText": "Auto mode disabled",
+    "@photoboothAutoModeOffText": {
+        "description": "Text shown when auto mode is disabled."
+    },
     "socialMediaShareLinkText": "Just took a selfie at the #IOPhotoBooth. See you at #GoogleIO!",
     "@socialMediaShareLinkText": {
         "description": "Text that is put into the social media share URL link."
@@ -339,5 +400,45 @@
     "clearAllStickersButtonLabelText": "Clear all props",
     "@clearAllStickersButtonLabelText": {
         "description": "Semantic label for the clear all stickers button"
+    },
+    "cameraPermissionDeniedErrorText": "Camera access denied",
+    "@cameraPermissionDeniedErrorText": {
+        "description": "Error message when camera permission is denied."
+    },
+    "cameraNotFoundErrorText": "Camera not found",
+    "@cameraNotFoundErrorText": {
+        "description": "Error message when camera is not found."
+    },
+    "cameraGenericErrorText": "Camera error",
+    "@cameraGenericErrorText": {
+        "description": "Generic camera error message."
+    },
+    "printerNotFoundErrorText": "Printer not found",
+    "@printerNotFoundErrorText": {
+        "description": "Error message when printer is not found."
+    },
+    "printerErrorText": "Print error",
+    "@printerErrorText": {
+        "description": "Error message when printing fails."
+    },
+    "selectCameraText": "Select Camera",
+    "@selectCameraText": {
+        "description": "Text for camera selection."
+    },
+    "selectPrinterText": "Select Printer",
+    "@selectPrinterText": {
+        "description": "Text for printer selection."
+    },
+    "settingsText": "Settings",
+    "@settingsText": {
+        "description": "Settings text."
+    },
+    "photoQualityText": "Photo Quality",
+    "@photoQualityText": {
+        "description": "Text for photo quality setting."
+    },
+    "autoModeDelayText": "Auto Mode Delay (sec)",
+    "@autoModeDelayText": {
+        "description": "Text for auto mode delay setting."
     }
 }

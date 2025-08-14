@@ -4,31 +4,31 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
-  flutter: 3.8.0-14.0.pre.10
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.10.0 <4.0.0"
 
 dependencies:
   analytics:
     path: packages/analytics
   authentication_repository:
     path: packages/authentication_repository
-  bloc: ^8.1.0
+  bloc: ^8.1.4
   camera:
     path: packages/camera/camera
   cross_file: ^0.3.3+2
   equatable: ^2.0.5
-  firebase_auth: ^4.2.9
-  firebase_core: ^2.4.1
-  firebase_storage: ^11.0.10
+  firebase_auth: ^6.0.0
+  firebase_core: ^4.0.0
+  firebase_storage: ^13.0.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.1
+  flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
   image_compositor:
     path: packages/image_compositor
-  intl: ^0.18.0
-  just_audio: ^0.9.31
+  intl: ^0.20.2
+  just_audio: ^0.10.4
   photobooth_ui:
     path: packages/photobooth_ui
   photos_repository:
@@ -37,7 +37,12 @@ dependencies:
     path: packages/platform_helper
   rxdart: ^0.27.7
   uuid: ^3.0.7
-  very_good_analysis: ^4.0.0+1
+  very_good_analysis: ^5.0.0
+  
+  # Native desktop packages
+  printing: ^5.12.0
+  pdf: ^3.10.7
+  desktop_window: ^0.4.0
 
 dev_dependencies:
   bloc_test: ^9.1.0
@@ -50,7 +55,7 @@ dev_dependencies:
   url_launcher_platform_interface: ^2.1.1
 
 dependency_overrides:
-  intl: ^0.18.0
+  vector_math: ^2.2.0
 
 flutter:
   uses-material-design: true
@@ -65,3 +70,9 @@ flutter:
     - assets/props/eyewear/
     - assets/props/food/
     - assets/props/shapes/
+  
+  fonts:
+    - family: BigSoftie
+      fonts:
+        - asset: assets/fonts/BigSoftie-Fat.otf
+          weight: 400

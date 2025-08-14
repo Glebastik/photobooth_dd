@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:io_photobooth/l10n/l10n.dart';
 import 'package:io_photobooth/landing/landing.dart';
+import 'package:io_photobooth/photobooth/photobooth.dart';
+import 'package:io_photobooth/app/localized_app.dart';
+
 import 'package:photobooth_ui/photobooth_ui.dart';
 import 'package:photos_repository/photos_repository.dart';
 
@@ -19,18 +22,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider.value(value: authenticationRepository),
-        RepositoryProvider.value(value: photosRepository),
-      ],
-      child: AnimatedFadeIn(
-        child: ResponsiveLayoutBuilder(
-          small: (_, __) => _App(theme: PhotoboothTheme.small),
-          medium: (_, __) => _App(theme: PhotoboothTheme.medium),
-          large: (_, __) => _App(theme: PhotoboothTheme.standard),
-        ),
-      ),
+    return LocalizedApp(
+      authenticationRepository: authenticationRepository,
+      photosRepository: photosRepository,
     );
   }
 }
@@ -51,6 +45,9 @@ class _App extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       home: const LandingPage(),
+      routes: {
+
+      },
     );
   }
 }
