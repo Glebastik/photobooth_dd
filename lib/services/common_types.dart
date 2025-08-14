@@ -31,6 +31,7 @@ class CameraSettings {
   final bool addFrame;
   final double brightness;
   final double contrast;
+  final String? watermark;
 
   const CameraSettings({
     this.width = 1920,
@@ -42,6 +43,7 @@ class CameraSettings {
     this.addFrame = false,
     this.brightness = 0.5,
     this.contrast = 0.5,
+    this.watermark,
   });
 
   CameraSettings copyWith({
@@ -54,6 +56,7 @@ class CameraSettings {
     bool? addFrame,
     double? brightness,
     double? contrast,
+    String? watermark,
   }) {
     return CameraSettings(
       width: width ?? this.width,
@@ -65,6 +68,7 @@ class CameraSettings {
       addFrame: addFrame ?? this.addFrame,
       brightness: brightness ?? this.brightness,
       contrast: contrast ?? this.contrast,
+      watermark: watermark ?? this.watermark,
     );
   }
 }
