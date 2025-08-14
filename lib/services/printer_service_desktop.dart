@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
+import 'common_types.dart';
 
 /// Desktop-совместимый сервис для печати
 class PrinterService {
@@ -184,6 +185,17 @@ class PrinterService {
       debugPrint('Ошибка печати HTML: $e');
       return false;
     }
+  }
+
+  /// Выбрать принтер
+  void selectPrinter(PrinterDevice printer) {
+    _selectedPrinter = printer;
+    debugPrint('Выбран принтер: ${printer.name}');
+  }
+
+  /// Печать с настройками
+  Future<bool> printPhoto(Uint8List imageData, {PrintSettings? settings}) async {
+    return await printImage(imageData);
   }
 
   /// Проверить статус принтера

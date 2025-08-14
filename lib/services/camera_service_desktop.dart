@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'common_types.dart';
 
 /// Desktop-совместимый сервис для работы с камерой
 class CameraService {
@@ -24,9 +25,9 @@ class CameraService {
         final devices = result.stdout.toString().split('\n')
             .where((line) => line.isNotEmpty)
             .map((device) => CameraDevice(
-                  id: device,
-                  name: 'Camera ${device.split('/').last}',
-                  isDefault: device == '/dev/video0',
+                  device,
+                  'Camera ${device.split('/').last}',
+                  device == '/dev/video0' ? CameraType.builtin : CameraType.external,
                 ))
             .toList();
         _availableCameras = devices;
@@ -38,10 +39,10 @@ class CameraService {
     
     // Fallback - создаем виртуальную камеру
     _availableCameras = [
-      CameraDevice(
-        id: 'virtual_camera',
-        name: 'Virtual Camera',
-        isDefault: true,
+      const CameraDevice(
+        'virtual_camera',
+        'Virtual Camera',
+        CameraType.builtin,
       ),
     ];
     return _availableCameras;
@@ -121,20 +122,33 @@ class CameraService {
   Future<bool> requestPermissions() async {
     return true; // На Linux разрешения не требуются
   }
-}
 
-/// Модель устройства камеры
-class CameraDevice {
-  final String id;
-  final String name;
-  final bool isDefault;
+  /// Запросить разрешение на камеру
+  Future<bool> requestCameraPermission() async {
+    return true; // На Linux разрешения не требуются
+  }
 
-  CameraDevice({
-    required this.id,
-    required this.name,
-    this.isDefault = false,
-  });
+  /// Выбрать камеру
+  Future<bool> selectCamera(String deviceId) async {
+    final camera = _availableCameras.where((c) => c.deviceId == deviceId).firstOrNull;
+    if (camera != null) {
+      _selectedCamera = camera;
+      return await initializeCamera(camera);
+    }
+    return false;
+  }
 
-  @override
-  String toString() => 'CameraDevice(id: $id, name: $name, default: $isDefault)';
+  /// Остановить камеру
+  Future<void> stopCamera() async {
+    await stopRecording();
+    _isInitialized = false;
+  }
+
+  /// Сделать фото с настройками
+  Future<Uint8List?> takePhoto({CameraSettings? settings}) async {
+    return await capturePhoto();
+  }
+
+  /// Получить видео элемент (для совместимости с веб-версией)
+  dynamic get videoElement => null; // На desktop не используется
 }

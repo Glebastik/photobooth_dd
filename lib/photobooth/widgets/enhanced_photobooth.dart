@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/l10n.dart';
 import '../../services/camera_service.dart';
 import '../../services/printer_service.dart';
+import '../../services/common_types.dart';
 
 /// Улучшенная фотобудка с поддержкой внешних камер и принтеров
 class EnhancedPhotobooth extends StatefulWidget {
@@ -33,7 +34,7 @@ class _EnhancedPhotoboothState extends State<EnhancedPhotobooth> {
   Uint8List? _lastPhoto;
   
   List<CameraDevice> _availableCameras = [];
-  List<String> _availablePrinters = [];
+  List<PrinterDevice> _availablePrinters = [];
   CameraSettings _cameraSettings = const CameraSettings();
   PrintSettings _printSettings = const PrintSettings();
   
