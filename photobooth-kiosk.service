@@ -1,0 +1,28 @@
+[Unit]
+Description=Photobooth Kiosk Mode
+Documentation=https://github.com/Glebastik/photobooth_dd
+After=multi-user.target
+Conflicts=lightdm.service gdm.service gdm3.service
+
+[Service]
+Type=simple
+User=ddself
+Group=ddself
+WorkingDirectory=/opt/photobooth
+ExecStartPre=/bin/bash -c 'sudo systemctl stop lightdm || true'
+ExecStartPre=/bin/bash -c 'sudo systemctl stop gdm || true'
+ExecStartPre=/bin/bash -c 'sudo pkill -f Xorg || true'
+ExecStart=/opt/photobooth/start-kiosk.sh
+Environment=HOME=/home/ddself
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Безопасность
+NoNewPrivileges=false
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

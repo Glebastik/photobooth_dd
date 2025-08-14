@@ -3,13 +3,16 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photos_repository/photos_repository.dart';
+import 'package:io_photobooth/app/app.dart';
 import 'package:io_photobooth/app/app_bloc_observer.dart';
 import 'package:io_photobooth/firebase_options.dart';
 import 'package:io_photobooth/landing/loading_indicator_io.dart'
@@ -35,28 +38,41 @@ void main() async {
   }
 
   // Создание репозиториев с учетом платформы
-  final authenticationRepository = AuthenticationRepository(
-    firebaseAuth: Platform.isLinux ? null : FirebaseAuth.instance,
-  );
-  final photosRepository = PhotosRepository(
-    firebaseStorage: Platform.isLinux ? null : FirebaseStorage.instance,
-  );
+  late final AuthenticationRepository authenticationRepository;
+  late final PhotosRepository photosRepository;
+  
+  if (Platform.isLinux) {
+    // Для Linux создаем заглушки без Firebase
+    authenticationRepository = AuthenticationRepository();
+    photosRepository = PhotosRepository();
+  } else {
+    authenticationRepository = AuthenticationRepository(
+      firebaseAuth: FirebaseAuth.instance,
+    );
+    photosRepository = PhotosRepository(
+      firebaseStorage: FirebaseStorage.instance,
+    );
+  }
 
-  unawaited(
-    authenticationRepository.signInAnonymously(),
-  );
+  if (!Platform.isLinux) {
+    unawaited(
+      authenticationRepository.signInAnonymously(),
+    );
+  }
 
-  unawaited(
-    Future.wait([
-      Flame.images.load('android_spritesheet.png'),
-      Flame.images.load('dash_spritesheet.png'),
-      Flame.images.load('dino_spritesheet.png'),
-      Flame.images.load('sparky_spritesheet.png'),
-      Flame.images.load('photo_frame_spritesheet_landscape.jpg'),
-      Flame.images.load('photo_frame_spritesheet_portrait.png'),
-      Flame.images.load('photo_indicator_spritesheet.png'),
-    ]),
-  );
+  if (!Platform.isLinux) {
+    unawaited(
+      Future.wait([
+        Flame.images.load('android_spritesheet.png'),
+        Flame.images.load('dash_spritesheet.png'),
+        Flame.images.load('dino_spritesheet.png'),
+        Flame.images.load('sparky_spritesheet.png'),
+        Flame.images.load('photo_frame_spritesheet_landscape.jpg'),
+        Flame.images.load('photo_frame_spritesheet_portrait.png'),
+        Flame.images.load('photo_indicator_spritesheet.png'),
+      ]),
+    );
+  }
 
   runZonedGuarded(
     () => runApp(
