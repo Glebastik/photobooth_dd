@@ -28,6 +28,8 @@ class CameraSettings {
   final bool enableFlash;
   final String? frameStyle;
   final Map<String, dynamic>? effects;
+  final bool addFrame;
+  final double brightness;
 
   const CameraSettings({
     this.width = 1920,
@@ -36,6 +38,8 @@ class CameraSettings {
     this.enableFlash = false,
     this.frameStyle,
     this.effects,
+    this.addFrame = false,
+    this.brightness = 0.5,
   });
 
   CameraSettings copyWith({
@@ -45,6 +49,8 @@ class CameraSettings {
     bool? enableFlash,
     String? frameStyle,
     Map<String, dynamic>? effects,
+    bool? addFrame,
+    double? brightness,
   }) {
     return CameraSettings(
       width: width ?? this.width,
@@ -53,6 +59,8 @@ class CameraSettings {
       enableFlash: enableFlash ?? this.enableFlash,
       frameStyle: frameStyle ?? this.frameStyle,
       effects: effects ?? this.effects,
+      addFrame: addFrame ?? this.addFrame,
+      brightness: brightness ?? this.brightness,
     );
   }
 }

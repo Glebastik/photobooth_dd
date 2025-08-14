@@ -77,7 +77,7 @@ class PrinterService {
       await getAvailablePrinters();
       _selectedPrinter = printer ?? _availablePrinters.firstWhere(
         (p) => p.isDefault,
-        orElse: () => _availablePrinters.firstOrNull,
+        orElse: () => _availablePrinters.isNotEmpty ? _availablePrinters.first : null,
       );
       _isInitialized = true;
       debugPrint('Принтер инициализирован: ${_selectedPrinter?.name}');
@@ -244,21 +244,7 @@ class PrinterService {
   }
 }
 
-/// Модель устройства принтера
-class PrinterDevice {
-  final String id;
-  final String name;
-  bool isDefault;
 
-  PrinterDevice({
-    required this.id,
-    required this.name,
-    this.isDefault = false,
-  });
-
-  @override
-  String toString() => 'PrinterDevice(id: $id, name: $name, default: $isDefault)';
-}
 
 /// Статус принтера
 enum PrinterStatus {

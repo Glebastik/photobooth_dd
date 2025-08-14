@@ -53,7 +53,7 @@ class CameraService {
     try {
       _selectedCamera = camera ?? _availableCameras.firstOrNull;
       _isInitialized = true;
-      debugPrint('Камера инициализирована: ${_selectedCamera?.name}');
+      debugPrint('Камера инициализирована: ${_selectedCamera?.label}');
       return true;
     } catch (e) {
       debugPrint('Ошибка инициализации камеры: $e');
@@ -88,7 +88,7 @@ class CameraService {
     try {
       // На Linux можно использовать ffmpeg или v4l2 для захвата
       // Для демонстрации создаем заглушку
-      debugPrint('Снимок сделан с камеры: ${_selectedCamera?.name}');
+      debugPrint('Снимок сделан с камеры: ${_selectedCamera?.label}');
       
       // Возвращаем пустой массив байт как заглушку
       // В реальной реализации здесь будет захват с камеры
