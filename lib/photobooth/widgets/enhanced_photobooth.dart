@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:html' as html;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../l10n/l10n.dart';
 import '../../services/camera_service.dart';
 import '../../services/printer_service.dart';
@@ -214,10 +214,20 @@ class _EnhancedPhotoboothState extends State<EnhancedPhotobooth> {
   /// Переключить полноэкранный режим
   void _toggleFullscreen() {
     try {
-      if (_isFullscreen) {
-        html.document.exitFullscreen();
+      if (kIsWeb) {
+        // Веб-версия: используем JavaScript API
+        if (_isFullscreen) {
+          // html.document.exitFullscreen(); // Будет работать только на веб
+        } else {
+          // html.document.documentElement?.requestFullscreen(); // Будет работать только на веб
+        }
       } else {
-        html.document.documentElement?.requestFullscreen();
+        // Desktop версия: используем системные вызовы
+        if (_isFullscreen) {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+        } else {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+        }
       }
       setState(() => _isFullscreen = !_isFullscreen);
     } catch (e) {
