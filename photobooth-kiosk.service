@@ -1,28 +1,49 @@
 [Unit]
 Description=Photobooth Kiosk Mode
 Documentation=https://github.com/Glebastik/photobooth_dd
-After=multi-user.target
-Conflicts=lightdm.service gdm.service gdm3.service
+After=multi-user.target graphical-session.target
+Wants=multi-user.target
+Conflicts=lightdm.service gdm.service
 
 [Service]
 Type=simple
 User=ddself
 Group=ddself
 WorkingDirectory=/opt/photobooth
-ExecStartPre=/bin/bash -c 'sudo systemctl stop lightdm || true'
-ExecStartPre=/bin/bash -c 'sudo systemctl stop gdm || true'
-ExecStartPre=/bin/bash -c 'sudo pkill -f Xorg || true'
-ExecStart=/opt/photobooth/start-kiosk.sh
-Environment=HOME=/home/ddself
-Environment=XDG_RUNTIME_DIR=/run/user/1000
+ExecStart=/usr/local/bin/start-kiosk.sh
 Restart=always
-RestartSec=5
+RestartSec=10
 StandardOutput=journal
 StandardError=journal
+
+# Увеличенный timeout для запуска X сервера
+TimeoutStartSec=60
+TimeoutStopSec=30
+
+# Переменные окружения
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=XAUTHORITY=/home/ddself/.Xauthority
+Environment=HOME=/home/ddself
+
+# Права доступа к устройствам
+SupplementaryGroups=video audio input dialout tty
 
 # Безопасность
 NoNewPrivileges=false
 PrivateTmp=false
+ProtectSystem=false
+ProtectHome=false
+
+# Ограничения ресурсов
+MemoryLimit=2G
+CPUQuota=80%
+
+# Убедиться, что логи создаются
+ExecStartPre=/bin/mkdir -p /var/log
+ExecStartPre=/bin/touch /var/log/photobooth-kiosk.log
+ExecStartPre=/bin/touch /var/log/photobooth-app.log
+ExecStartPre=/bin/chown ddself:ddself /var/log/photobooth-kiosk.log /var/log/photobooth-app.log
 
 [Install]
 WantedBy=multi-user.target
