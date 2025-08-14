@@ -43,8 +43,12 @@ void main() async {
   
   if (Platform.isLinux) {
     // Для Linux создаем заглушки без Firebase
-    authenticationRepository = AuthenticationRepository();
-    photosRepository = PhotosRepository();
+    authenticationRepository = const AuthenticationRepository(
+      firebaseAuth: null,
+    );
+    photosRepository = PhotosRepository(
+      firebaseStorage: null,
+    );
   } else {
     authenticationRepository = AuthenticationRepository(
       firebaseAuth: FirebaseAuth.instance,
