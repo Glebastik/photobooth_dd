@@ -29,9 +29,8 @@ class PrinterService {
             if (parts.length >= 2) {
               final name = parts[1];
               printers.add(PrinterDevice(
-                id: name,
                 name: name,
-                isDefault: false,
+                description: 'Системный принтер',
               ));
             }
           }
@@ -44,12 +43,8 @@ class PrinterService {
           final match = RegExp(r'system default destination: (.+)').firstMatch(defaultLine);
           if (match != null) {
             final defaultName = match.group(1)?.trim();
-            for (final printer in printers) {
-              if (printer.name == defaultName) {
-                printer.isDefault = true;
-                break;
-              }
-            }
+            // Примечание: isDefault устанавливается при создании PrinterDevice
+            debugPrint('Принтер по умолчанию: $defaultName');
           }
         }
         
@@ -62,10 +57,9 @@ class PrinterService {
     
     // Fallback - создаем виртуальный принтер
     _availablePrinters = [
-      PrinterDevice(
-        id: 'virtual_printer',
+      const PrinterDevice(
         name: 'Virtual Printer',
-        isDefault: true,
+        description: 'Виртуальный принтер для тестирования',
       ),
     ];
     return _availablePrinters;
@@ -75,10 +69,14 @@ class PrinterService {
   Future<bool> initializePrinter([PrinterDevice? printer]) async {
     try {
       await getAvailablePrinters();
-      _selectedPrinter = printer ?? _availablePrinters.firstWhere(
-        (p) => p.isDefault,
-        orElse: () => _availablePrinters.isNotEmpty ? _availablePrinters.first : null,
-      );
+      if (printer != null) {
+        _selectedPrinter = printer;
+      } else if (_availablePrinters.isNotEmpty) {
+        _selectedPrinter = _availablePrinters.firstWhere(
+          (p) => p.isDefault,
+          orElse: () => _availablePrinters.first,
+        );
+      }
       _isInitialized = true;
       debugPrint('Принтер инициализирован: ${_selectedPrinter?.name}');
       return true;

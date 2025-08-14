@@ -30,6 +30,7 @@ class CameraSettings {
   final Map<String, dynamic>? effects;
   final bool addFrame;
   final double brightness;
+  final double contrast;
 
   const CameraSettings({
     this.width = 1920,
@@ -40,6 +41,7 @@ class CameraSettings {
     this.effects,
     this.addFrame = false,
     this.brightness = 0.5,
+    this.contrast = 0.5,
   });
 
   CameraSettings copyWith({
@@ -51,6 +53,7 @@ class CameraSettings {
     Map<String, dynamic>? effects,
     bool? addFrame,
     double? brightness,
+    double? contrast,
   }) {
     return CameraSettings(
       width: width ?? this.width,
@@ -61,6 +64,7 @@ class CameraSettings {
       effects: effects ?? this.effects,
       addFrame: addFrame ?? this.addFrame,
       brightness: brightness ?? this.brightness,
+      contrast: contrast ?? this.contrast,
     );
   }
 }
