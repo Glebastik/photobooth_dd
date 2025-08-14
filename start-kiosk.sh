@@ -5,7 +5,7 @@
 
 # Функция логирования
 log() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') [KIOSK] $1" | tee -a /var/log/photobooth-kiosk.log
+    echo "$(date '+%Y-%m-%d %H:%M:%S') [KIOSK] $1" | tee -a /home/ddself/logs/photobooth-kiosk.log
 }
 
 # Функция очистки при выходе
@@ -72,7 +72,7 @@ log "📸 Запуск приложения фотобудки..."
 cd /opt/photobooth
 
 # Запуск приложения с перенаправлением вывода
-./build/linux/x64/release/bundle/io_photobooth 2>&1 | tee -a /var/log/photobooth-app.log &
+./build/linux/x64/release/bundle/io_photobooth 2>&1 | tee -a /home/ddself/logs/photobooth-app.log &
 APP_PID=$!
 
 log "✅ Приложение запущено (PID: $APP_PID, X PID: $X_PID)"

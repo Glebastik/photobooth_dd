@@ -39,11 +39,8 @@ ProtectHome=false
 MemoryLimit=2G
 CPUQuota=80%
 
-# Убедиться, что логи создаются
-ExecStartPre=/bin/mkdir -p /var/log
-ExecStartPre=/bin/touch /var/log/photobooth-kiosk.log
-ExecStartPre=/bin/touch /var/log/photobooth-app.log
-ExecStartPre=/bin/chown ddself:ddself /var/log/photobooth-kiosk.log /var/log/photobooth-app.log
+# Создание директории логов в домашней папке (безопасно)
+ExecStartPre=/bin/mkdir -p /home/ddself/logs
 
 [Install]
 WantedBy=multi-user.target
